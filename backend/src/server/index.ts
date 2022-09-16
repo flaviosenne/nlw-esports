@@ -14,4 +14,4 @@ const PORT = Number(process.env.PORT) || 3000
 const HOST = 'localhost'
 
 
-app.listen(PORT, HOST, ()=> console.info(`Server is UP in ${HOST}:${PORT}`))
+app.listen(PORT, ()=> console.info(`Server is UP in ${HOST}:${PORT}`))
