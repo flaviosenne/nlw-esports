@@ -16,7 +16,7 @@ export class AdsController {
 
         const ad = await this.connect.ad.create({
             data: {
-                gameId: body.gameId,
+                gameId,
                 name: body.name,
                 yearsPlaying: body.yearsPlaying,
                 discord: body.discord,
