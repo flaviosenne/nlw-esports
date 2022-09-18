@@ -73,6 +73,6 @@ export class AdsController {
             }
         })
 
-        return res.json({ dicord: ad.discord })
+        return res.json({ discord: ad.discord })
     }
 }

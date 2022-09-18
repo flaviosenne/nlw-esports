@@ -14,6 +14,7 @@ import logImg from '../../assets/logo-nlw-esports.png'
 import { styles } from "./styles";
 import { THEME } from "../../theme";
 import { useEffect, useState } from "react";
+import { DuoMatch } from "../../components/DuoMatch";
 
 
 export function Game() {
@@ -22,10 +23,17 @@ export function Game() {
     const game = route.params as GameParams
     const navigation = useNavigation()
     const [duos, setDuo] = useState<DuoCardProps[]>([])
+    const [discordDuoSelected, setDiscordDuoSelected] = useState('')
 
 
     function handleGoBack() {
         navigation.goBack()
+    }
+
+    async function getDiscordUser(adsId: string) {
+        fetch(`http://192.168.100.47:3000/games/ads/${adsId}/discord`)
+            .then(res => res.json())
+            .then(data => setDiscordDuoSelected(data.discord))
     }
 
     useEffect(() => {
@@ -63,7 +71,9 @@ export function Game() {
                     keyExtractor={item => item.id}
                     renderItem={({ item }) => {
                         return (
-                            <DuoCard data={item} onConnect={() => { }} />
+                            <DuoCard
+                                data={item}
+                                onConnect={() => getDiscordUser(item.id)} />
                         )
                     }}
                     horizontal
@@ -78,6 +88,12 @@ export function Game() {
                             Não há anuncios publicados ainda.
                         </Text>
                     )}
+                />
+
+                <DuoMatch
+                    visible={discordDuoSelected.length > 0}
+                    discord={discordDuoSelected}
+                    onClose={() => setDiscordDuoSelected('')}
                 />
             </SafeAreaView>
         </Background>
